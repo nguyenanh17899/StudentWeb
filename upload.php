@@ -62,17 +62,6 @@ if (isset($_POST['uploadclick'])) {
                 echo 'window.open("welcome.php","_self");';
                 echo '</script>';
             }
-
-            // for($a = 0; $a < count($_FILES["fileUp"]["name"]); $a++){
-            //     $filename = $_FILES['file']['name'][$a];
-            //     $path = 'FileUpload/'.$filename;
-            //     $sql = "insert into files(file_path,upload_datetime) values($path, now())";
-            //     mysqli_query($conn, $sql);
-            //     move_uploaded_file($_FILES['fileUp']['tmp_name'][$a], $path);
-            //     echo 'File Uploaded';
-
-            // }
-
         }
     } else {
         $text = 'Bạn chưa chọn file upload';

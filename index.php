@@ -1,10 +1,11 @@
 <?php
 session_start();
 include("connect.php");
-$username = $_POST['username'];
-$password = md5($_POST['password']);
+
 
 if (isset($_POST['login'])) {
+  $username = $_POST['username'];
+  $password = md5($_POST['password']);
   $sql = "SELECT * FROM users WHERE username = '$username' AND passcode = '$password'";
   $result = mysqli_query($conn, $sql);
   $num = $result->num_rows;

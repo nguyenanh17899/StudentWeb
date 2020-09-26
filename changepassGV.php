@@ -6,13 +6,10 @@ $id = $_GET['id'];
 $sql = "select * from users where id = '$id' ";
 $res = mysqli_query($conn, $sql);
 $r = mysqli_fetch_array($res, MYSQLI_ASSOC);
-// $curpass = $_POST['current_password'];
-$newpass = $_POST['new_password'];
-$confpass = $_POST['confirm_password'];
-// $pass = $r['passcode'];
-// $pass= password_hash($pass, PASSWORD_DEFAULT, ['cost' => 11]);
-// echo $curpass, $newpass, $confpass, $pass;
+
 if (isset($_POST['btnChangePassword'])) {
+    $newpass = $_POST['new_password'];
+    $confpass = $_POST['confirm_password'];
     if ($newpass == $confpass) {
         $newpass = md5($_POST["new_password"]);
         $result = mysqli_query($conn, "UPDATE users set passcode='" . $newpass . "' WHERE id='$id'");
@@ -26,7 +23,7 @@ if (isset($_POST['btnChangePassword'])) {
     } else {
         echo '<script>';
         echo 'alert("Mật khẩu không khớp");';
-        echo 'window.open("changepassGV.php?id='.$id.'"'.',"_self");';
+        echo 'window.open("changepassGV.php?id=' . $id . '"' . ',"_self");';
         echo '</script>';
     }
 }

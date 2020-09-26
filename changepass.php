@@ -6,21 +6,25 @@ $id = $_GET['id'];
 $sql = "select * from users where id = '$id' ";
 $res = mysqli_query($conn, $sql);
 $r = mysqli_fetch_array($res, MYSQLI_ASSOC);
-$curpass = $_POST['current_password'];
-$newpass = $_POST['new_password'];
-$confpass = $_POST['confirm_password'];
-$pass = $r['passcode'];
-// $pass= password_hash($pass, PASSWORD_DEFAULT, ['cost' => 11]);
-// echo $curpass, $newpass, $confpass, $pass;
-if (md5($curpass) == $pass) {
-    $newpass = md5($_POST["new_password"]);
-    mysqli_query($conn, "UPDATE users set passcode='" .$newpass. "' WHERE id='$id'");
-    $message = "Password Changed";
-    // print_r('ok');
-    // header('location: "welcome.php"');
-} else {
-    $message = "Current Password is not correct";
-    // print_r('er');
+if (isset($_POST['btn'])) {
+    $curpass = $_POST['current_password'];
+    $newpass = $_POST['new_password'];
+    $confpass = $_POST['confirm_password'];
+    $pass = $r['passcode'];
+    // $pass= password_hash($pass, PASSWORD_DEFAULT, ['cost' => 11]);
+    // echo $curpass, $newpass, $confpass, $pass;
+    if (md5($curpass) == $pass) {
+        $newpass = md5($_POST["new_password"]);
+        mysqli_query($conn, "UPDATE users set passcode='" . $newpass . "' WHERE id='$id'");
+        echo "<script>";
+        echo "alert('Thanh cong');";
+        echo "</script>";
+        
+    } else {
+        echo "<script>";
+        echo "alert('Mật khẩu hiện tại không đúng');";
+        echo "</script>";
+    }
 }
 ?>
 
@@ -74,7 +78,7 @@ if (md5($curpass) == $pass) {
             <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Xác nhận mật khẩu">
         </div>
         <div class="form-group">
-            <input type="submit" name="btnChangePassword" class="btn btn-primary" value="Lưu thay đổi" />
+            <input type="submit" name="btn" class="btn btn-primary" value="Lưu thay đổi" />
         </div>
     </form>
 

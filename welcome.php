@@ -60,7 +60,6 @@ session_start();
           <div id="SV" class="tabcontent">
             <h3 style="text-align: center; margin-bottom: 30px;">Danh sách sinh vien</h3>
             <?php
-            session_start();
             include('connect.php');
             $sql = "SELECT * FROM users WHERE chucvu='Sinh viên'";
             $result = mysqli_query($conn, $sql) or die("Loi truy van");
@@ -215,7 +214,6 @@ session_start();
 
             <h2>Danh sách challenge</h2>
             <?php
-              session_start();
               include('connect.php');
               $sql = "SELECT * FROM challenges ";
               $result = mysqli_query($conn, $sql) or die("Loi truy van");
@@ -239,7 +237,7 @@ session_start();
                 echo "<td>" . $row['date_create'] . "</td>";
                 echo "<td>";
                 if ($_SESSION['role'] == 1) {
-                  echo "<a href=''>Xem</a>";
+                  // echo "<a href=''>Xem</a>";
 
                 }
                 else {

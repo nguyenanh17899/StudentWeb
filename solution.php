@@ -90,7 +90,7 @@ $r2 = mysqli_fetch_array($res2,MYSQLI_ASSOC);
                     <input type="submit" name="uploadclick" value="Upload" />
                 </form>
                 <?php
-                session_start();
+                // session_start();
                 include('connect.php');
                 if (isset($_POST['uploadclick'])) {
                     // Nếu người dùng có chọn file để upload
