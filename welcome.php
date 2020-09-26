@@ -145,9 +145,6 @@ session_start();
                   <form method="post" action="upload.php" enctype="multipart/form-data">
                     <input type="file" name="fileUp" />
                     <input type="submit" name="uploadclick" value="Upload" />
-                    <?php include('upload.php');
-                    echo "<p style='color:red;'>$text</p>"; ?>
-
                   </form>
                 </div>
                 <div class="modal-footer">
@@ -158,8 +155,21 @@ session_start();
             </div>
           </div>
           <div id="BaiTap" class="tabcontent">
+
             <h3>Danh sách bài tập hiện tại</h3>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addExModal">Thêm bài tập</button>
+            <?php
+            session_start();
+            include('connect.php');
+            $sql = "SELECT * FROM files ";
+            $result = mysqli_query($conn, $sql) or die("Loi truy van");
+            $style = "";
+            $listFile = scandir('FileUpload');
+
+            if ($_SESSION['role'] == 1) {
+              // $style = "visibility: hidden;";
+              echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addExModal">Thêm bài tập</button>';
+            }
+            ?>
             <table style="width:100%;">
               <tr>
                 <td style="width: 35px;">STT</td>
@@ -167,11 +177,78 @@ session_start();
                 <td>Tên bài tập</td>
                 <td></td>
               </tr>
+              <?php
+              $i = 1;
+              while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+
+                echo "<tr>";
+                echo "<td>" . $i++ . "</td>";
+                echo "<td>" . $row['upload_datetime'] . "</td>";
+                echo "<td>" . $row['fileupname'] . "</td>";
+                echo "<td>";
+
+
+                // echo "<a href='' >Xem</a>";
+                if ($_SESSION['role'] == 1) {
+                  echo "<a href='showlistsub.php?id=".$row['id']."'>Xem</a>";
+
+                } else {
+                  // echo "<a href='download.php?id=".$row['id']."'>Tải xuống</a>|<a href=''>Bài làm</a>";
+                  for ($a = 2; $a < count($listFile); $a++) {
+                    if ($listFile[$a] == $row['fileupname']) {
+              ?>
+                      <a download="FileUpload/<?php echo $listFile[$a] ?>" href="FileUpload/<?php echo $listFile[$a] ?>">Tải xuống|</a>
+              <?php
+                      echo "<a href='solution.php?id=".$row['id']."'>bài làm</a>";
+                    break;
+                    }
+                  }
+                }
+                echo "</td>";
+                echo "</tr>";
+              }
+
+              ?>
             </table>
           </div>
           <div id="ThuThach" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
+
+            <h2>Danh sách challenge</h2>
+            <?php
+              session_start();
+              include('connect.php');
+              $sql = "SELECT * FROM challenges ";
+              $result = mysqli_query($conn, $sql) or die("Loi truy van");
+              if($_SESSION['role'] == 1){
+                echo "<a href = 'addChallenge.php'>Thêm mới</a>";
+              }
+            ?>
+            <table style="width:100%;">
+              <tr>
+                <td style="width:35px;">STT</td>
+                <td>Tên thử thách</td>
+                <td>Ngày tạo</td>
+                <td>Submit</td>
+              </tr>
+              <?php
+              $i =1;
+              while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                echo "<tr>";
+                echo "<td>" . $i++ . "</td>";
+                echo "<td>" . $row['name_challenge'] . "</td>";
+                echo "<td>" . $row['date_create'] . "</td>";
+                echo "<td>";
+                if ($_SESSION['role'] == 1) {
+                  echo "<a href=''>Xem</a>";
+
+                }
+                else {
+                  echo "<a href='submitchallenge.php?id=".$row['id']."'>Submit</a>";
+
+                }
+              }
+              ?>
+            </table>
           </div>
           <div id="Profile" class="tabcontent profile">
             <h3>Thông tin cá nhân</h3>

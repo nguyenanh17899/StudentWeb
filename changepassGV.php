@@ -6,22 +6,31 @@ $id = $_GET['id'];
 $sql = "select * from users where id = '$id' ";
 $res = mysqli_query($conn, $sql);
 $r = mysqli_fetch_array($res, MYSQLI_ASSOC);
-$curpass = $_POST['current_password'];
+// $curpass = $_POST['current_password'];
 $newpass = $_POST['new_password'];
 $confpass = $_POST['confirm_password'];
-$pass = $r['passcode'];
+// $pass = $r['passcode'];
 // $pass= password_hash($pass, PASSWORD_DEFAULT, ['cost' => 11]);
 // echo $curpass, $newpass, $confpass, $pass;
-if (md5($curpass) == $pass) {
-    $newpass = md5($_POST["new_password"]);
-    mysqli_query($conn, "UPDATE users set passcode='" .$newpass. "' WHERE id='$id'");
-    $message = "Password Changed";
-    // print_r('ok');
-    // header('location: "welcome.php"');
-} else {
-    $message = "Current Password is not correct";
-    // print_r('er');
+if (isset($_POST['btnChangePassword'])) {
+    if ($newpass == $confpass) {
+        $newpass = md5($_POST["new_password"]);
+        $result = mysqli_query($conn, "UPDATE users set passcode='" . $newpass . "' WHERE id='$id'");
+
+        if ($result) {
+            echo '<script>';
+            echo 'alert("Update thành coong!");';
+            echo 'window.open("welcome.php","_self");';
+            echo '</script>';
+        }
+    } else {
+        echo '<script>';
+        echo 'alert("Mật khẩu không khớp");';
+        echo 'window.open("changepassGV.php?id='.$id.'"'.',"_self");';
+        echo '</script>';
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -64,9 +73,9 @@ if (md5($curpass) == $pass) {
         <div class="form-group">
             <input disabled type="text" name="username" class="form-control" value="<?php echo $r['username']; ?> ">
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <input type="password" name="current_password" id="current_password" class="form-control" placeholder="Mật khẩu hiện tại">
-        </div>
+        </div> -->
         <div class="form-group">
             <input type="password" name="new_password" id="new_password" class="form-control" placeholder="Mật khẩu mới">
         </div>

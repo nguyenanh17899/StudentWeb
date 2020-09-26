@@ -62,7 +62,7 @@ $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
             <input type="text" class="form-input" name="sdt" value="<?php echo $row['phonenum']; ?> ">
         </div>
         <input type="submit" name="update" value="cập nhật" />
-        <a href='changepass.php?id=<?php echo $id ?>'>Đổi mật khẩu</a>
+        <a href='changepassGV.php?id=<?php echo $id ?>'>Đổi mật khẩu</a>
 
     </form>
 

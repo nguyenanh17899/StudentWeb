@@ -58,7 +58,7 @@ session_start();
             <label for="">SDT:</label>
             <input type="text" class="form-input" name="phonenum">
         </div>
-        <input type="submit" value="Thêm"> 
+        <input type="submit" value="Thêm" name = "submit"> 
     </form>
 
 </body>

@@ -44,7 +44,7 @@ $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
         </div>
     </div>
     <h2>Sửa thông tin</h2>
-    <form action="editfun2.php" class="form" method="post">
+    <form action="editInforFunction.php" class="form" method="post">
         <input hidden type="text" class="form-input" name="id" value="<?php echo $row['id']; ?> ">
         <div class="form-row">
             <label for="">Tên đăng nhập:</label>
